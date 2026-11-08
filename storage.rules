@@ -1,0 +1,19 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function admin() {
+      return request.auth != null
+        && request.auth.uid == 'cO8W4xaU7xXWUedPhCXgiu5Amms1';
+    }
+
+    match /products/{sku}/{fileName} {
+      // Public can display product images; only the admin can upload, replace or delete them.
+      allow read: if true;
+      allow write: if admin() && (
+        request.resource == null ||
+        (request.resource.size < 5 * 1024 * 1024
+          && request.resource.contentType.matches('image/(webp|jpeg|png)'))
+      );
+    }
+  }
+}

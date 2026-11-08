@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administración | Gestion Commerciale Pro</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .admin-simple{max-width:900px;margin:34px auto;padding:0 18px}
+    .simple-form{max-width:720px;margin:0 auto 28px}
+    .simple-form h1{margin-top:0}
+    .simple-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .simple-grid label{display:flex;flex-direction:column;gap:7px;font-weight:600}
+    .simple-grid input{width:100%;box-sizing:border-box}
+    .simple-grid .wide{grid-column:1/-1}
+    .simple-help{margin:12px 0;color:#64748b;font-size:.92rem;line-height:1.5}
+    .simple-form button{margin-top:16px}
+    .simple-table{width:100%;border-collapse:collapse}
+    .simple-table th,.simple-table td{padding:12px;text-align:left;border-bottom:1px solid #e5eaf2}
+    @media(max-width:650px){.simple-grid{grid-template-columns:1fr}.simple-grid .wide{grid-column:auto}.simple-table{font-size:.88rem}}
+  </style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><b class="logo">GC</b> Gestion Commerciale Pro</a>
+  <nav><a href="index.html">Ver catálogo</a><button id="logout" type="button" hidden>Cerrar sesión</button></nav>
+</header>
+<main class="admin-simple">
+  <section id="login" class="panel login">
+    <h1>Acceso administrador</h1>
+    <form id="login-form">
+      <label>Email<input name="email" type="email" autocomplete="username" required></label>
+      <label>Contraseña<input name="password" type="password" autocomplete="current-password" required></label>
+      <button class="btn" type="submit">Entrar</button>
+      <p id="login-msg" class="muted" role="status"></p>
+    </form>
+  </section>
+
+  <section id="dashboard" hidden>
+    <form id="product-form" class="panel simple-form">
+      <h1>Añadir producto</h1>
+      <p class="simple-help">Rellena los datos básicos y pulsa Guardar. La referencia y el lote se crean automáticamente.</p>
+      <div class="simple-grid">
+        <label class="wide">Nombre del producto
+          <input name="name" maxlength="120" placeholder="Ej. FARID" required>
+        </label>
+        <label>Precio (€)
+          <input name="price" type="number" min="0.01" step="0.01" placeholder="Ej. 12" required>
+        </label>
+        <label>Descuento (%) <span class="muted">Opcional</span>
+          <input name="discount" type="number" min="0" max="100" step="1" value="0" placeholder="0">
+        </label>
+        <label>Fecha de producción
+          <input name="productionDate" type="date" required>
+        </label>
+        <label>Fecha de caducidad
+          <input name="expiryDate" type="date" required>
+        </label>
+        <label>Cantidad disponible
+          <input name="quantity" type="number" min="1" step="1" placeholder="Ej. 20" required>
+        </label>
+        <label class="wide">Foto del producto <span class="muted">Opcional</span>
+          <input id="product-image" name="image" type="file" accept="image/jpeg,image/png,image/webp">
+        </label>
+      </div>
+      <img id="image-preview" alt="Vista previa" hidden style="max-width:180px;max-height:150px;object-fit:contain;margin-top:12px;border-radius:10px">
+      <p class="simple-help">La cantidad es necesaria para calcular el stock. Si no añades una foto, el producto se guardará igualmente.</p>
+      <button class="btn" type="submit">Guardar producto</button>
+      <p id="product-msg" class="muted" role="status"></p>
+    </form>
+
+    <section class="panel">
+      <h2>Mis productos</h2>
+      <div class="scroll">
+        <table class="simple-table">
+          <thead><tr><th>Producto</th><th>Precio</th><th>Descuento</th><th>Stock</th></tr></thead>
+          <tbody id="inventory"></tbody>
+        </table>
+      </div>
+      <p id="inventory-msg" class="muted" role="status"></p>
+    </section>
+  </section>
+</main>
+<footer>Gestion Commerciale Pro · Panel privado</footer>
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>
